@@ -56,13 +56,19 @@ public class ProfileServlet extends HttpServlet {
   }
 
   /**
-   * This function fires when a user requests the /profile URL. It simply forwards the request to
-   * profile.jsp.
+   * This function is used when someone wants to go to the /profile URL. It lets profile.jsp do it's job by
+   * displaying the page.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-
     request.getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(request, response);
   }
+
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, ServletException {
+    String username = request.getParameter("about");
+    
 }
