@@ -19,10 +19,11 @@ import codeu.model.store.basic.UserStore;
 
 public class ProfileServletTest {
 
-  private RegisterServlet registerServlet;
+  private ProfileServlet profileServlet;
   private HttpServletRequest mockRequest;
   private HttpServletResponse mockResponse;
   private RequestDispatcher mockRequestDispatcher;
+  private UserStore mockUserStore;
 
   @Before
   public void setup() {
@@ -33,7 +34,7 @@ public class ProfileServletTest {
     Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/profile.jsp"))
         .thenReturn(mockRequestDispatcher);
     mockUserStore = Mockito.mock(UserStore.class);
-    chatServlet.setUserStore(mockUserStore);
+    profileServlet.setUserStore(mockUserStore);
   }
 
   @Test
