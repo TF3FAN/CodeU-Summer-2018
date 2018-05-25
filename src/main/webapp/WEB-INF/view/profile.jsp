@@ -25,11 +25,12 @@
 
     <h1> Name's Profile Page </h1>
     <form action="/profile" method="POST">
-      <label for="about">About name</label>
+      <label for="about"><b>About name</b></label>
       <br/>
-      <textarea rows="20" cols="60">
-        <input type="text" name="about" id="about">
+      <%--<input type="textarea" name="about" id="about">--%>
+      <textarea rows="20" cols="60" name="about" id="about">
       </textarea>
+      <br/>
       <button type="submit">Submit</button>
     </form>
   </div>
