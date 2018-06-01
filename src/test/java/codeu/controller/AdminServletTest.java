@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class AdminServletTest{
+public class AdminServletTest {
   private AdminServlet adminServlet;
   private HttpServletRequest mockRequest;
   private HttpServletResponse mockResponse;
