@@ -62,14 +62,54 @@ public class ProfileServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
+    String requestUrl = request.getRequestURI();
+    String username = requestUrl.substring("/profile/".length());
+
+    User user = userStore.getUser(username);
+    if (username == null) {
+      // user is not logged in redirect to login page
+      response.sendRedirect("/login");
+      return;
+    }
+
+
+    //String requestUrl = request.getRequestURI();
+
     request.getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(request, response);
+    request.setAttribute("user",username);
   }
 
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-    String username = request.getParameter("about");
+    String about = request.getParameter("about");
+    String username = (String) request.getSession().getAttribute("user");
+    if (username == null) {
+      // user is not logged in redirect to login page
+      response.sendRedirect("/login");
+      return;
+    }
+
+    User user = userStore.getUser(username);
+    if (user == null) {
+      // user was not found redirect to login page
+      response.sendRedirect("/login");
+      return;
+    }
+
+    String name = request.getParameter("username");
+    String requestUrl = request.getRequestURI();
+    //request.getSession().setAttribute("user", about);
+    //String conversationTitle = requestUrl.substring("/profile/".length());
+
+    //Message about =
+        //new Message(UUID.randomUUID(), user.getId(), about , Instant.now());
+
+    request.getSession().setAttribute("user", username);
+    //request.getSession().setAttribute("about", about);
+    //userStore.addAbout(about);
+    response.sendRedirect("/profile/" + name);
 
 }
 }
