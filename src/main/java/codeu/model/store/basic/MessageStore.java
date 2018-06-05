@@ -89,4 +89,11 @@ public class MessageStore {
   public void setMessages(List<Message> messages) {
     this.messages = messages;
   }
+
+  /**
+   * Returns the current size of the Message Store.
+   */
+  public int getSize(){
+    return messages.size();
+  }
 }

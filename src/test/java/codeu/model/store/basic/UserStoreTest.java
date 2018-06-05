@@ -75,6 +75,11 @@ public class UserStoreTest {
     Assert.assertNull(resultUser);
   }
 
+  @Test /*before adding user*/
+  public void testGetSize(){
+    Assert.assertEquals(userStore.getSize(), 3);
+  }
+
   @Test
   public void testAddUser() {
     User inputUser =
@@ -87,6 +92,7 @@ public class UserStoreTest {
     userStore.addUser(inputUser);
     User resultUser = userStore.getUser("test_username");
 
+    Assert.assertEquals(userStore.getSize(), 4); //check size after adding user
     assertEquals(inputUser, resultUser);
     Mockito.verify(mockPersistentStorageAgent).writeThrough(inputUser);
   }

@@ -59,15 +59,22 @@ public class ConversationStoreTest {
     Assert.assertFalse(isTitleTaken);
   }
 
+  @Test /*before adding conversation*/
+  public void testGetSize(){
+    Assert.assertEquals(conversationStore.getSize(), 1);
+  }
+
   @Test
   public void testAddConversation() {
     Conversation inputConversation =
         new Conversation(UUID.randomUUID(), UUID.randomUUID(), "test_conversation", Instant.now());
 
     conversationStore.addConversation(inputConversation);
+
     Conversation resultConversation =
         conversationStore.getConversationWithTitle("test_conversation");
 
+    Assert.assertEquals(conversationStore.getSize(), 2); //check size after adding conversation
     assertEquals(inputConversation, resultConversation);
     Mockito.verify(mockPersistentStorageAgent).writeThrough(inputConversation);
   }
