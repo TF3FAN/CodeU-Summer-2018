@@ -45,6 +45,7 @@ public class ProfileServlet extends HttpServlet {
   public void init() throws ServletException {
     super.init();
     setUserStore(UserStore.getInstance());
+    //setAboutStore(AboutStore.getInstance());
   }
 
   /**
@@ -55,6 +56,31 @@ public class ProfileServlet extends HttpServlet {
     this.userStore = userStore;
   }
 
+  //void setAboutStore(AboutStore aboutStore) {
+    //this.aboutStore = aboutStore;
+  //}
+
+
+  /**This class represents a User */
+  /**public class User {
+    private final UUID id;
+    private String about;
+
+  public User(UUID id, String about) {
+      this.id = id;
+      this.about = about;
+    }
+
+  public void setAbout(String about) {
+    this.about = about;
+  }
+
+  public String getAbout() {
+    return about;
+  }*/
+
+//}
+
   /**
    * This function is used when someone wants to go to the /profile URL. It lets profile.jsp do it's job by
    * displaying the page.
@@ -64,19 +90,23 @@ public class ProfileServlet extends HttpServlet {
       throws IOException, ServletException {
     String requestUrl = request.getRequestURI();
     String username = requestUrl.substring("/profile/".length());
+    //String about;
 
     User user = userStore.getUser(username);
-    if (username == null) {
+    if (user == null) {
       // user is not logged in redirect to login page
       response.sendRedirect("/login");
       return;
     }
 
+    //if ((user != null) && (user.getAbout() != null)) {
+      //about = user.getAbout();
+    //}
 
     //String requestUrl = request.getRequestURI();
-
+    request.setAttribute("user", user);
+    //request.setAttribute("username",username);
     request.getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(request, response);
-    request.setAttribute("user",username);
   }
 
 
@@ -84,14 +114,14 @@ public class ProfileServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     String about = request.getParameter("about");
-    String username = (String) request.getSession().getAttribute("user");
+    String username = (String)request.getSession().getAttribute("user");
     if (username == null) {
       // user is not logged in redirect to login page
       response.sendRedirect("/login");
       return;
     }
 
-    User user = userStore.getUser(username);
+    User user = UserStore.getInstance().getUser(username);
     if (user == null) {
       // user was not found redirect to login page
       response.sendRedirect("/login");
@@ -106,9 +136,10 @@ public class ProfileServlet extends HttpServlet {
     //Message about =
         //new Message(UUID.randomUUID(), user.getId(), about , Instant.now());
 
-    request.getSession().setAttribute("user", username);
+    //request.getSession().setAttribute("user", username);
     //request.getSession().setAttribute("about", about);
     //userStore.addAbout(about);
+    request.setAttribute("about",about);
     response.sendRedirect("/profile/" + name);
 
 }

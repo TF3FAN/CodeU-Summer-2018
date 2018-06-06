@@ -42,27 +42,22 @@
 
   <div id="container">
 
-    <h1> <%=request.getSession().getAttribute("user")%>'s Profile Page </h1>
+    <h1> <%=request.getParameter("user")%>'s Profile Page </h1>
 
+    <label for="about"><b>About <%=request.getParameter("user")%></b></label>
+    <br/>
+
+    <% if(request.getSession().getAttribute("user") != null &&
+          request.getSession().getAttribute("user").equals(request.getAttribute("user"))) { %>
       <form action="/profile" method="POST">
-        <label for="about"><b>About <%=request.getSession().getAttribute("user")%></b></label>
-        <br/>
-      <%--<input type="textarea" name="about" id="about">--%>
         <textarea rows="20" cols="60">
         </textarea>
         <input type="text" name="about" id="about">
         <br/>
         <button type="submit">Submit</button>
       </form>
-
+    <%} %>
   </div>
-  <%--<div id="container">
-    <div
-      style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>This is your profile page</h1>
-
-    </div>
-  </div>--%>
 </body>
 </html>

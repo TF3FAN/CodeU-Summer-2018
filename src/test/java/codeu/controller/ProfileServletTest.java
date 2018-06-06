@@ -54,20 +54,26 @@ public class ProfileServletTest {
     Mockito.when(mockRequest.getRequestURI()).thenReturn("/profile/test_username");
     Mockito.when(mockSession.getAttribute("user")).thenReturn("test_username");
 
-    profileServlet.doGet(mockRequest, mockResponse);
+    //profileServlet.doGet(mockRequest, mockResponse);
     //Mockito.when(mockSession.getAttribute("user")).thenReturn("test_username");
+    //Mockito.when(mockUserStore.getUsername("test_username"))
+        //.thenReturn(fakeUser);
 
-    //User fakeUser =
-        //new User (
-            //UUID.randomUUID(),
-            //"test_username",
-            //"$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            //Instant.now());
+    User fakeUser =
+        new User (
+            UUID.randomUUID(),
+            "test_username",
+            "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
+            Instant.now());
 
-    //Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
+    //Mockito.when(mockUserStore.getUsername("test_username")).thenReturn(fakeUser);
 
+    Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
+
+    profileServlet.doGet(mockRequest, mockResponse);
     //Mockito.verify(mockRequest).setAttribute("user", fakeUsername);
-    //Mockito.verify(mockSession).setAttribute("user", "test_username");
+    //Mockito.verify(mockSession).setAttribute("username", "test username");
+    Mockito.verify(mockRequest).setAttribute("user", fakeUser);
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
 
