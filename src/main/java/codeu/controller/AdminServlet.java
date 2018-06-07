@@ -8,8 +8,7 @@ import javax.servlet.ServletException;
 
 public class AdminServlet extends HttpServlet {
 
-/** Directs user to admin page.
- */
+/** Directs user to admin page.*/
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
   throws IOException, ServletException{

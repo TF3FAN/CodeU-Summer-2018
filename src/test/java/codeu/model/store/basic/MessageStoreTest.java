@@ -61,11 +61,6 @@ public class MessageStoreTest {
     assertEquals(MESSAGE_TWO, resultMessages.get(1));
   }
 
-  @Test /*before adding message*/
-  public void testGetSize(){
-    Assert.assertEquals(messageStore.getSize(), 3);
-  }
-
   @Test
   public void testAddMessage() {
     UUID inputConversationId = UUID.randomUUID();
@@ -77,6 +72,7 @@ public class MessageStoreTest {
             "test message",
             Instant.now());
 
+    Assert.assertEquals(messageStore.getSize(), 3); //check size before adding message
     messageStore.addMessage(inputMessage);
     Message resultMessage = messageStore.getMessagesInConversation(inputConversationId).get(0);
 

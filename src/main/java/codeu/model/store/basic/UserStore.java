@@ -127,9 +127,7 @@ public class UserStore {
     this.users = users;
   }
 
-  /**
-   * Returns the current size of the UserStore.
-   */
+  /** Returns the current size of the UserStore. */
   public int getSize(){
     return users.size();
   }

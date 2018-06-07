@@ -90,9 +90,7 @@ public class MessageStore {
     this.messages = messages;
   }
 
-  /**
-   * Returns the current size of the Message Store.
-   */
+  /** Returns the current size of the Message Store. */
   public int getSize(){
     return messages.size();
   }

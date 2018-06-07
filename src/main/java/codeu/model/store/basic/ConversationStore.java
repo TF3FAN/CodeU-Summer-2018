@@ -101,10 +101,8 @@ public class ConversationStore {
     this.conversations = conversations;
   }
 
-  /**
-   * Returns the current size of the Conversation Store.
-   */
-  public int getSize(){
+  /** Returns the current size of the Conversation Store. */
+  public int getSize() {
     return conversations.size();
   }
 }

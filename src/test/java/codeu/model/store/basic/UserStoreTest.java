@@ -75,11 +75,6 @@ public class UserStoreTest {
     Assert.assertNull(resultUser);
   }
 
-  @Test /*before adding user*/
-  public void testGetSize(){
-    Assert.assertEquals(userStore.getSize(), 3);
-  }
-
   @Test
   public void testAddUser() {
     User inputUser =
@@ -89,6 +84,7 @@ public class UserStoreTest {
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
             Instant.now());
 
+    Assert.assertEquals(userStore.getSize(), 3); //check size before adding user
     userStore.addUser(inputUser);
     User resultUser = userStore.getUser("test_username");
 
