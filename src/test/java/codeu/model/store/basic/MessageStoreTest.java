@@ -72,9 +72,11 @@ public class MessageStoreTest {
             "test message",
             Instant.now());
 
+    Assert.assertEquals(messageStore.getSize(), 3); //check size before adding message
     messageStore.addMessage(inputMessage);
     Message resultMessage = messageStore.getMessagesInConversation(inputConversationId).get(0);
 
+    Assert.assertEquals(messageStore.getSize(), 4); //check size after adding message
     assertEquals(inputMessage, resultMessage);
     Mockito.verify(mockPersistentStorageAgent).writeThrough(inputMessage);
   }
