@@ -84,9 +84,11 @@ public class UserStoreTest {
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
             Instant.now());
 
+    Assert.assertEquals(userStore.getSize(), 3); //check size before adding user
     userStore.addUser(inputUser);
     User resultUser = userStore.getUser("test_username");
 
+    Assert.assertEquals(userStore.getSize(), 4); //check size after adding user
     assertEquals(inputUser, resultUser);
     Mockito.verify(mockPersistentStorageAgent).writeThrough(inputUser);
   }

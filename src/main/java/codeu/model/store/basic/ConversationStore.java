@@ -100,4 +100,9 @@ public class ConversationStore {
   public void setConversations(List<Conversation> conversations) {
     this.conversations = conversations;
   }
+
+  /** Returns the current size of the Conversation Store. */
+  public int getSize() {
+    return conversations.size();
+  }
 }

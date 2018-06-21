@@ -64,10 +64,13 @@ public class ConversationStoreTest {
     Conversation inputConversation =
         new Conversation(UUID.randomUUID(), UUID.randomUUID(), "test_conversation", Instant.now());
 
+    Assert.assertEquals(conversationStore.getSize(), 1); //check size before adding conversation
     conversationStore.addConversation(inputConversation);
+
     Conversation resultConversation =
         conversationStore.getConversationWithTitle("test_conversation");
 
+    Assert.assertEquals(conversationStore.getSize(), 2); //check size after adding conversation
     assertEquals(inputConversation, resultConversation);
     Mockito.verify(mockPersistentStorageAgent).writeThrough(inputConversation);
   }
