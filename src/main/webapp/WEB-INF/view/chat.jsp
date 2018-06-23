@@ -66,15 +66,37 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
     <div id="chat">
       <ul>
-    <%
+      <%
       for (Message message : messages) {
         String author = UserStore.getInstance()
           .getUser(message.getAuthorId()).getName();
-    %>
-      <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
-    <%
-      }
-    %>
+      %>
+        <li><strong><%= author %>: </strong><%
+        String msgtxt = message.getContent();
+        int startInd = msgtxt.indexOf('@');
+        int help = 0;
+        UserStore users = UserStore.getInstance();
+        int endInd = msgtxt.length();
+        while (startInd != -1 && startInd < msgtxt.length()-1){
+        %><%= msgtxt.substring(help, startInd) %><%
+          for (int i = startInd+1; i < msgtxt.length(); i++){
+            if (!(msgtxt.charAt(i)>= 65 && msgtxt.charAt(i) <= 90)&& !(msgtxt.charAt(i)>= 97 && msgtxt.charAt(i) <= 122)){
+              endInd = i;
+              break;
+            }
+          }
+          if (users.isUserRegistered(msgtxt.substring(startInd + 1, endInd))){
+          %><strong style="color:purple;"><%= msgtxt.substring(startInd+1, endInd) %></strong><%
+            help = endInd;
+          }
+          else{
+            help = startInd;
+          }
+          endInd = msgtxt.length();
+          startInd = msgtxt.indexOf('@', startInd + 1);
+        }
+        %><%= msgtxt.substring(help, msgtxt.length())%>
+      </li><% } %>
       </ul>
     </div>
 
