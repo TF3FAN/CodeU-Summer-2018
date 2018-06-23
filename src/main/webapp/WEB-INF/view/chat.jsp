@@ -80,7 +80,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         while (startInd != -1 && startInd < msgtxt.length()-1){
         %><%= msgtxt.substring(help, startInd) %><%
           for (int i = startInd+1; i < msgtxt.length(); i++){
-            if (!(msgtxt.charAt(i)>= 65 && msgtxt.charAt(i) <= 90)&& !(msgtxt.charAt(i)>= 97 && msgtxt.charAt(i) <= 122)){
+            if (!(msgtxt.charAt(i)>= 65 && msgtxt.charAt(i) <= 90)&& !(msgtxt.charAt(i)>= 97 && msgtxt.charAt(i) <= 122) && !(msgtxt.charAt(i)>= 48 && msgtxt.charAt(i) <= 57)){
               endInd = i;
               break;
             }
