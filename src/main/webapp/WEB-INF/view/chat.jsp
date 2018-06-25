@@ -72,30 +72,30 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
           .getUser(message.getAuthorId()).getName();
       %>
         <li><strong><%= author %>: </strong><%
-        String msgtxt = message.getContent();
-        int startInd = msgtxt.indexOf('@');
+        String msgtxt = message.getContent(); //actual text that user types
+        int startInd = msgtxt.indexOf('@'); // first occurance of tag character
         int help = 0;
-        UserStore users = UserStore.getInstance();
+        UserStore users = UserStore.getInstance(); //instance of all users in system
         int endInd = msgtxt.length();
-        while (startInd != -1 && startInd < msgtxt.length()-1){
-        %><%= msgtxt.substring(help, startInd) %><%
-          for (int i = startInd+1; i < msgtxt.length(); i++){
+        while (startInd != -1 && startInd < msgtxt.length()-1){//while there still exists another '@' that isn't the last character
+        %><%= msgtxt.substring(help, startInd) %><% //display the text untill the @ appears normally.
+          for (int i = startInd+1; i < msgtxt.length(); i++){ //used to find the next non-letter/non-number character
             if (!(msgtxt.charAt(i)>= 65 && msgtxt.charAt(i) <= 90)&& !(msgtxt.charAt(i)>= 97 && msgtxt.charAt(i) <= 122) && !(msgtxt.charAt(i)>= 48 && msgtxt.charAt(i) <= 57)){
-              endInd = i;
+              endInd = i; //marks the end of the tagged user's name
               break;
             }
           }
-          if (users.isUserRegistered(msgtxt.substring(startInd + 1, endInd))){
-          %><strong style="color:purple;"><%= msgtxt.substring(startInd+1, endInd) %></strong><%
+          if (users.isUserRegistered(msgtxt.substring(startInd + 1, endInd))){ //if this user is in fact a real user
+          %><strong style="color:purple;"><%= msgtxt.substring(startInd+1, endInd) %></strong><% //display the name in purple
             help = endInd;
           }
           else{
             help = startInd;
           }
           endInd = msgtxt.length();
-          startInd = msgtxt.indexOf('@', startInd + 1);
+          startInd = msgtxt.indexOf('@', startInd + 1); //find next instance of '@'
         }
-        %><%= msgtxt.substring(help, msgtxt.length())%>
+        %><%= msgtxt.substring(help, msgtxt.length())%> 
       </li><% } %>
       </ul>
     </div>
