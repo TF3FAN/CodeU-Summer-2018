@@ -55,6 +55,12 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <%String name = (String) request.getSession().getAttribute("user");
+      boolean admin = name != null && (name.equals("gaurijain") ||
+      name.equals("beckyqiu") || name.equals("mariorios"));
+      if (admin){%>
+    <a href="/admin">Admin</a>
+      <%}%>
   </nav>
 
   <div id="container">
@@ -95,7 +101,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
           endInd = msgtxt.length();
           startInd = msgtxt.indexOf('@', startInd + 1); //find next instance of '@'
         }
-        %><%= msgtxt.substring(help, msgtxt.length())%> 
+        %><%= msgtxt.substring(help, msgtxt.length())%>
       </li><% } %>
       </ul>
     </div>

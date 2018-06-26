@@ -30,6 +30,12 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <%String name = (String) request.getSession().getAttribute("user");
+      boolean admin = name != null && (name.equals("gaurijain") ||
+      name.equals("beckyqiu") || name.equals("mariorios"));
+      if (admin){%>
+    <a href="/admin">Admin</a>
+      <%}%>
   </nav>
 
   <div id="container">

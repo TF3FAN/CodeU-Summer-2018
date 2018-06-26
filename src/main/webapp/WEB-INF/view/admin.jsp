@@ -24,6 +24,9 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <%if (admin){%>
+    <a href="/admin">Admin</a>
+      <%}%>
   </nav>
   <div id="container">
     <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
