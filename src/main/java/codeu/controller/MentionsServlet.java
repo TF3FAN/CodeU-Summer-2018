@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class MentionsServlet extends HttpServlet{
+
+  /*
+    This function fires when the user requests the /mentions URL.
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
           throws IOException, ServletException{
