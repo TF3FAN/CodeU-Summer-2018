@@ -20,10 +20,10 @@
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){%>
       <a>Hello <%=name%>!</a>
+      <a href="/mentions">Mentions</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/mentions">Mentions</a>
     <a href="/about.jsp">About</a>
   </nav>
   <div id="container">

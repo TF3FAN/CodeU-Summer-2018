@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your Mentions</title>
+  <title>Mentions</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -23,13 +23,13 @@
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/mentions">Mentions</a>
     <a href="/about.jsp">About</a>
   </nav>
   <div id="container">
     <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
-        <p>You will show messages you were mentioned in here! (Not yet!)</p>
-      </div>
+      <h1>Your Mentions</h1>
+      <p>You will show messages you were mentioned in here! (Not yet!)</p>
+    </div>
   </div>
 </body>
 </html>
