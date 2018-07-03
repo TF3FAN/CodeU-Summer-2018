@@ -18,6 +18,9 @@
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
+    <% if(admin) {%>
+      <a href="/admin.jsp">Admin</a>
+      <% } %> 
     <% if(request.getSession().getAttribute("user") != null){%>
       <a>Hello <%=name%>!</a>
       <a href="/mentions">Mentions</a>
