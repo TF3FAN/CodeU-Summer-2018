@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Page</title>
+  <title>Mentions</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -31,20 +31,9 @@
   </nav>
   <div id="container">
     <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
-      <%
-      if (admin){ %>
-        <h1>This is the Admin Page. Welcome <%=name%>.</h1>
-        <%}else{ %>
-        <h1>Access Denied not an Admin.</h1>
-        <%}%>
-      </div>
+      <h1>Your Mentions</h1>
+      <p>You will show messages you were mentioned in here! (Not yet!)</p>
+    </div>
   </div>
-  <%if (admin){ %>
-  <ul>
-     <li>Users: <%=numUsers%></li>
-     <li>Conversations: <%=numConvo%></li>
-     <li>Messages: <%=numChats%></li>
-  </ul>
-  <%}%>
 </body>
 </html>
