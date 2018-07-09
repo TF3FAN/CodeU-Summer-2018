@@ -1,6 +1,7 @@
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
+<%@ page import="codeu.model.store.basic.UserStore" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,13 +14,13 @@
     int numUsers = UserStore.getInstance().getSize();
     int numConvo = ConversationStore.getInstance().getSize();
     int numChats = MessageStore.getInstance().getSize();
-    boolean admin = name != null && (name.equals("gaurijain") ||
-    name.equals("beckyqiu") || name.equals("mariorios"));%>
+    boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
+    %>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){%>
-      <a>Hello <%=name%>!</a>
+    <% if(name != null){%>
+      <a>Hello <%= name %>!</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>

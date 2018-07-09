@@ -45,19 +45,17 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   </script>
 </head>
 <body onload="scrollChat()">
-
+  <%String name = (String) request.getSession().getAttribute("user");%>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
-      <% if (request.getSession().getAttribute("user") != null) { %>
-    <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+      <% if (name != null) { %>
+    <a>Hello <%= name %>!</a>
     <% } else { %>
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
-    <%String name = (String) request.getSession().getAttribute("user");
-      boolean admin = name != null && (name.equals("gaurijain") ||
-      name.equals("beckyqiu") || name.equals("mariorios"));
+    <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
       if (admin){%>
     <a href="/admin">Admin</a>
       <%}%>
@@ -88,7 +86,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         int endInd = msgtxt.length();
         while (startInd != -1 && startInd < msgtxt.length()-1){
         %><%= msgtxt.substring(help, startInd) %><%
-          for (int i = startInd+1; i < msgtxt.length(); i++){ /
+          for (int i = startInd+1; i < msgtxt.length(); i++){
             if (!(msgtxt.charAt(i)>= 65 && msgtxt.charAt(i) <= 90)&&
             !(msgtxt.charAt(i)>= 97 && msgtxt.charAt(i) <= 122) && !(msgtxt.charAt(i)>= 48
             && msgtxt.charAt(i) <= 57)){
@@ -113,7 +111,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
     <hr/>
 
-    <% if (request.getSession().getAttribute("user") != null) { %>
+    <% if (name != null) { %>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST">
         <input type="text" name="message">
         <br/>
