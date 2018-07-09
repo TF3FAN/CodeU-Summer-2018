@@ -28,6 +28,7 @@
     <a href="/conversations">Conversations</a>
     <% if(name != null) { %>
       <a>Hello <%= name %>!</a>
+      <a href="/mentions">Mentions</a>
     <% } else { %>
       <a href="/login">Login</a>
     <% } %>
