@@ -103,6 +103,20 @@ public class UserStoreTest {
     Assert.assertFalse(userStore.isUserRegistered("fake username"));
   }
 
+  @Test
+  public void testIsAdminRegistered_true() {
+    Assert.assertTrue(userStore.isAdminRegistered("gaurijain"));
+    Assert.assertTrue(userStore.isAdminRegistered("beckyqiu"));
+  }
+
+  @Test
+  public void testIsAdminRegistered_false() {
+    Assert.assertFalse(userStore.isAdminRegistered("guarijain"));
+    Assert.assertFalse(userStore.isAdminRegistered("BeckyQiu"));
+    Assert.assertFalse(userStore.isAdminRegistered("gauri_jain"));
+
+  }
+
   private void assertEquals(User expectedUser, User actualUser) {
     Assert.assertEquals(expectedUser.getId(), actualUser.getId());
     Assert.assertEquals(expectedUser.getName(), actualUser.getName());

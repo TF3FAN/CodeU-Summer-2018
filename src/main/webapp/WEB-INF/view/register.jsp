@@ -13,6 +13,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+<%@ page import="codeu.model.store.basic.UserStore" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,20 +22,21 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-
+  <%String name = (String) request.getSession().getAttribute("user");%>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
-    <% if(admin) {%>
-      <a href="/admin.jsp">Admin</a>
-      <% } %> 
-    <% if(request.getSession().getAttribute("user") != null) { %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+    <% if(name != null) { %>
+      <a>Hello <%= name %>!</a>
       <a href="/mentions">Mentions</a>
     <% } else { %>
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
+      if (admin){%>
+    <a href="/admin">Admin</a>
+      <%}%>
   </nav>
 
   <div id="container">
