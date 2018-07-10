@@ -25,11 +25,12 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-
+  <%String name = (String) request.getSession().getAttribute("user");%>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
-    <% if(admin) {%>
+    <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
+    if(admin) {%>
       <a href="/admin.jsp">Admin</a>
       <% } %> 
     <% if(request.getSession().getAttribute("user") != null){ %>
@@ -46,9 +47,9 @@
 
   <div id="container">
 
-    <h1> <%=request.getParameter("user")%>'s Profile Page </h1>
+    <h1> <%=name%>'s Profile Page </h1>
 
-    <label for="about"><b>About <%=request.getParameter("user")%></b></label>
+    <label for="about"><b>About <%=name%></b></label>
     <br/>
 
     <% if(request.getSession().getAttribute("user") != null &&
