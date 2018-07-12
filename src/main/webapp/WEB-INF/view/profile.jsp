@@ -33,16 +33,16 @@
     if(admin) {%>
       <a href="/admin.jsp">Admin</a>
       <% } %> 
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a href="/profile/<%=request.getSession().getAttribute("user")%>">My Profile</a>
-      <%--<a>My Profile <%= request.getSession().getAttribute("user") %>!</a>--%>
+    <% if(name != null){ %>
+      <a href="/profile/<%=name %>">My Profile</a>
+      <%--<a>My Profile <%= name %>!</a>--%>
       <a href="/mentions">Mentions</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
 
-    <%--<a href="/profile/<%=request.getSession().getAttribute("user")%>">My Profile</a>--%>
+    <%--<a href="/profile/<%=name %>">My Profile</a>--%>
   </nav>
 
   <div id="container">
