@@ -15,8 +15,10 @@
 package codeu.controller;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Event;
 import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
+import codeu.model.store.basic.EventStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
 import java.time.Instant;
@@ -36,6 +38,7 @@ public class ConversationServlet extends HttpServlet {
   /** Store class that gives access to Conversations. */
   private ConversationStore conversationStore;
 
+  private EventStore eventStore;
   /**
    * Set up state for handling conversation-related requests. This method is only called when
    * running in a server, not when running in a test.
@@ -43,6 +46,7 @@ public class ConversationServlet extends HttpServlet {
   @Override
   public void init() throws ServletException {
     super.init();
+    setEventStore(EventStore.getInstance());
     setUserStore(UserStore.getInstance());
     setConversationStore(ConversationStore.getInstance());
   }
@@ -63,6 +67,9 @@ public class ConversationServlet extends HttpServlet {
     this.conversationStore = conversationStore;
   }
 
+  void setEventStore(EventStore eventStore) {
+    this.eventStore = eventStore;
+  }
   /**
    * This function fires when a user navigates to the conversations page. It gets all of the
    * conversations from the model and forwards to conversations.jsp for rendering the list.
@@ -115,8 +122,11 @@ public class ConversationServlet extends HttpServlet {
 
     Conversation conversation =
         new Conversation(UUID.randomUUID(), user.getId(), conversationTitle, Instant.now());
+    Event event = new Event(UUID.randomUUID(), conversation);
 
     conversationStore.addConversation(conversation);
+    eventStore.addEvent(event);
+    
     response.sendRedirect("/chat/" + conversationTitle);
   }
 }
