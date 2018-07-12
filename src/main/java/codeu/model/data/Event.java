@@ -8,6 +8,7 @@ import java.util.UUID;
 
 /** Class representing an event to be shown on the Activity Feed page. */
 public class Event {
+  private final UUID id;
   private final String name;
   private final Message message;
   private final Instant creation;
@@ -29,7 +30,8 @@ public class Event {
   /*
     This constructor is called when a new User is created.
    */
-  public Event(User user) {
+  public Event(UUID id, User user) {
+    this.id = id;
     name = user.getName();
     message = null;
     creation = user.getCreationTime();
@@ -40,8 +42,8 @@ public class Event {
   /*
     This constructor is called when a new Conversation is created.
    */
-  public Event(Conversation convo) {
-
+  public Event(UUID id, Conversation convo) {
+    this.id = id;
     name = userStore.getUser(convo.getOwnerId()).getName();
     message = null;
     creation = convo.getCreationTime();
@@ -52,7 +54,8 @@ public class Event {
   /*
     This constructor is called when a new Message is created.
    */
-  public Event(Message thisMessage) {
+  public Event(UUID id, Message thisMessage) {
+    this.id = id;
     name = userStore.getUser(thisMessage.getAuthorId()).getName();
     message = thisMessage;
     creation = thisMessage.getCreationTime();
@@ -61,6 +64,10 @@ public class Event {
   }
 
 
+  /** Returns the UUID. */
+  public UUID getID() {
+    return id;
+  }
   /** Returns the username. */
   public String getName() {
     return name;
@@ -73,6 +80,10 @@ public class Event {
   /** Returns the generated  description of this Event. */
   public String getDescription() {
     return description;
+  }
+
+  public Conversation getConversation() {
+    return conversation;
   }
 
   /** Returns the creation time of this Event. */
