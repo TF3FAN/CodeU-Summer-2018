@@ -33,7 +33,7 @@
   <div id="container">
     <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
       <h1>Your Acitivty Feed</h1>
-
+      <p>Here you will find all the activity on the Team Vogue chat app! (Not yet!)</p>
       </div>
   </div>
 </body>
