@@ -19,6 +19,8 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.HashSet;
+import java.util.Arrays;
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -58,10 +60,15 @@ public class UserStore {
   /** The in-memory list of Users. */
   private List<User> users;
 
+  /** The in-memory set of Admins*/
+  private HashSet<String> admins;
+
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<>();
+    String adminArr [] = {"gaurijain", "beckyqiu", "ernestorojas"};
+    admins = new HashSet<>(Arrays.asList(adminArr));
   }
 
   /**
@@ -103,6 +110,15 @@ public class UserStore {
   }
 
   /**
+   * Add a new admin username to the current set of admin.
+   * TODO: Implement adding admin on website. For now, values hard-coded into set,
+   * so this function is not used.
+   */
+  public void addAdmin(String username) {
+    admins.add(username);
+  }
+
+  /**
    * Update an existing User.
    */
   public void updateUser(User user) {
@@ -119,6 +135,11 @@ public class UserStore {
     return false;
   }
 
+  /** Return true if given username is admin user*/
+  public boolean isAdminRegistered(String username){
+    return admins.contains(username);
+  }
+  
   /**
    * Sets the List of Users stored by this UserStore. This should only be called once, when the data
    * is loaded from Datastore.
