@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codeu.model.data.Event;
+import codeu.model.store.basic.EventStore;
 import org.mindrot.jbcrypt.BCrypt;
 
 import codeu.model.data.User;
@@ -18,6 +20,7 @@ public class RegisterServlet extends HttpServlet {
 
   /** Store class that gives access to Users. */
   private UserStore userStore;
+  private EventStore eventStore;
 
   /**
    * Set up state for handling registration-related requests. This method is only called when
@@ -27,6 +30,7 @@ public class RegisterServlet extends HttpServlet {
   public void init() throws ServletException {
     super.init();
     setUserStore(UserStore.getInstance());
+    setEventStore(EventStore.getInstance());
   }
 
   /**
@@ -35,6 +39,10 @@ public class RegisterServlet extends HttpServlet {
    */
   void setUserStore(UserStore userStore) {
     this.userStore = userStore;
+  }
+
+  void setEventStore(EventStore eventStore) {
+    this.eventStore = eventStore;
   }
 
   @Override
@@ -65,7 +73,9 @@ public class RegisterServlet extends HttpServlet {
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
     User user = new User(UUID.randomUUID(), username, hashedPassword, Instant.now());
+    Event event = new Event(UUID.randomUUID(), user);
     userStore.addUser(user);
+    eventStore.addEvent(event);
 
     response.sendRedirect("/login");
   }
