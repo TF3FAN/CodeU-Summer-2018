@@ -15,6 +15,7 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Event;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentDataStoreException;
@@ -179,5 +180,17 @@ public class PersistentDataStore {
     conversationEntity.setProperty("creation_time", conversation.getCreationTime().toString());
     datastore.put(conversationEntity);
   }
+
+  /**Write an Event object to the DataStore service. */
+  public void writeThrough(Event event) {
+    Entity eventEntity = new Entity("chat-events", event.getID().toString());
+    eventEntity.setProperty("uuid", event.getID().toString());
+    eventEntity.setProperty("creator", event.getName());
+    eventEntity.setProperty("message", event.getMessage());
+    eventEntity.setProperty("conversation", event.getConversation().getTitle());
+    eventEntity.setProperty("decription", event.getDescription());
+    eventEntity.setProperty("creation_time", event.getCreationTime().toString());
+  }
+
 }
 
