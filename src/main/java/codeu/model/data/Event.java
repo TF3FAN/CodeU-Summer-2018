@@ -64,6 +64,10 @@ public class Event {
   }
 
 
+  public String display() {
+    return this.getDescription();
+  }
+
   /** Returns the UUID. */
   public UUID getID() {
     return id;

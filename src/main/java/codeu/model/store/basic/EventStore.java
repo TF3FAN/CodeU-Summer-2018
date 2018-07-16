@@ -16,6 +16,9 @@ public class EventStore {
   /** Singleton instance of EventStore. */
   private static EventStore instance;
 
+  /** How many Events will be given to the Activity Feed. */
+  private static final int DISPLAYCOUNT = 10;
+
   /**
    * Returns the singleton instance of EventStore that should be shared between all servlet
    * classes. Do not call this function from a test; use getTestInstance() instead.
@@ -55,5 +58,15 @@ public class EventStore {
   public void addEvent(Event event) {
     events.add(event);
     persistentStorageAgent.writeThrough(event);
+  }
+
+  /** Collects 10 most recently created Events for display on Activity Feed. */
+  public List<Event> getEvents() {
+    List<Event> toBeDisplayed = new ArrayList<>();
+    for (int i = 0; i < DISPLAYCOUNT; i++) {
+      Event storedEvent = events.get(i);
+      toBeDisplayed.add(storedEvent);
+    }
+    return toBeDisplayed;
   }
 }

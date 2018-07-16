@@ -1,7 +1,9 @@
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
-<%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.store.basic.EventStore" %>
+
+<%EventStore eventStore = EventStore.getInstance() %>
 
 <!DOCTYPE html>
 <html>
@@ -11,9 +13,6 @@
 </head>
 <body>
   <%String name = (String) request.getSession().getAttribute("user");
-    int numUsers = UserStore.getInstance().getSize();
-    int numConvo = ConversationStore.getInstance().getSize();
-    int numChats = MessageStore.getInstance().getSize();
     boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
     %>
   <nav>
@@ -26,14 +25,31 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
-    <%if (admin){%>
+    <% if(admin){%>
     <a href="/admin">Admin</a>
       <%}%>
-  </nav>x``
+  </nav>
   <div id="container">
     <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
-      <h1>Your Activity Feed</h1>
-      <p>Here you will find all the activity on the Team Vogue chat app! (Not yet!)</p>
+      <% if(name != null){%>
+        <h1>Your Activity Feed</h1>
+        <%
+        List<Event> events = eventStore.getEvents();
+        if (events == null || events.isEmpty) {
+        %>
+          <p>There is no activity to display.</p>
+        <%} else{ %>
+          <ul class="mdl-list">
+            <% for(Event event : events){ %>
+              <li><%= event.display() %></li>
+              <%}%>
+          </ul>
+          <%}%>
+          
+      <%} else{%>
+        <h1>Activity Feed</h1>
+        <p>Please log in.</p>
+        <%}%>
       </div>
   </div>
 </body>

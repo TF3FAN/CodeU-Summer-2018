@@ -162,7 +162,7 @@ public class ChatServlet extends HttpServlet {
 
     messageStore.addMessage(message);
     eventStore.addEvent(event);
-      
+    
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);
   }
