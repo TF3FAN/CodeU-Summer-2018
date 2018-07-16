@@ -15,9 +15,11 @@
 package codeu.controller;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Event;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
+import codeu.model.store.basic.EventStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
@@ -39,6 +41,9 @@ public class ChatServlet extends HttpServlet {
 
   /** Store class that gives access to Messages. */
   private MessageStore messageStore;
+
+  /** Store class that gives access to Events. */
+  private EventStore eventStore;
 
   /** Store class that gives access to Users. */
   private UserStore userStore;
@@ -76,6 +81,9 @@ public class ChatServlet extends HttpServlet {
     this.userStore = userStore;
   }
 
+  void setEventStore(EventStore eventStore) {
+    this.eventStore = eventStore;
+  }
   /**
    * This function fires when a user navigates to the chat page. It gets the conversation title from
    * the URL, finds the corresponding Conversation, and fetches the messages in that Conversation.
@@ -150,9 +158,11 @@ public class ChatServlet extends HttpServlet {
             user.getId(),
             cleanedMessageContent,
             Instant.now());
+    Event event = new Event(UUID.randomUUID(), message);
 
     messageStore.addMessage(message);
-
+    eventStore.addEvent(event);
+      
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);
   }
