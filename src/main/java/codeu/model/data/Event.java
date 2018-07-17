@@ -18,16 +18,15 @@ public class Event {
   /**
    * Constructs a new Event.
    *
-   * @param name the username of the User that was created, if applicable
+   * @param id the id of the User who created this Event
+   * @param name the username of the User
    * @param message the message the User wrote, if applicable
    * @param creation the creation time of this Event
    * @param description the description of this Event to be displayed
    * @param conversation the conversation the User created, is applicable
    */
-  private UserStore userStore = UserStore.getInstance();
-  private ConversationStore convoStore = ConversationStore.getInstance();
 
-  /*
+  /**
     This constructor is called when a new User is created.
    */
   public Event(UUID id, User user) {
@@ -42,9 +41,9 @@ public class Event {
   /*
     This constructor is called when a new Conversation is created.
    */
-  public Event(UUID id, Conversation convo) {
+  public Event(UUID id, Conversation convo, String username) {
     this.id = id;
-    name = userStore.getUser(convo.getOwnerId()).getName();
+    name = username;
     message = null;
     creation = convo.getCreationTime();
     conversation = convo;
@@ -54,12 +53,12 @@ public class Event {
   /*
     This constructor is called when a new Message is created.
    */
-  public Event(UUID id, Message thisMessage) {
+  public Event(UUID id, Message thisMessage, String username, Conversation conversation) {
     this.id = id;
-    name = userStore.getUser(thisMessage.getAuthorId()).getName();
+    name = username;
     message = thisMessage;
     creation = thisMessage.getCreationTime();
-    conversation = convoStore.getConversationWithID(thisMessage.getConversationId());
+    this.conversation = conversation;
     description = name + "sent a mesage in " + conversation.title;
   }
 

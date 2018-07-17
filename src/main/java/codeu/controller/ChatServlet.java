@@ -158,11 +158,10 @@ public class ChatServlet extends HttpServlet {
             user.getId(),
             cleanedMessageContent,
             Instant.now());
-    Event event = new Event(UUID.randomUUID(), message);
-
     messageStore.addMessage(message);
+    Event event = new Event(UUID.randomUUID(), message, user.getName(), conversation);
     eventStore.addEvent(event);
-    
+
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);
   }

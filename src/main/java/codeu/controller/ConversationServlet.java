@@ -122,11 +122,10 @@ public class ConversationServlet extends HttpServlet {
 
     Conversation conversation =
         new Conversation(UUID.randomUUID(), user.getId(), conversationTitle, Instant.now());
-    Event event = new Event(UUID.randomUUID(), conversation);
-
     conversationStore.addConversation(conversation);
+    Event event = new Event(UUID.randomUUID(), conversation, user.getName());
     eventStore.addEvent(event);
-    
+
     response.sendRedirect("/chat/" + conversationTitle);
   }
 }
