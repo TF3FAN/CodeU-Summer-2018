@@ -64,6 +64,9 @@ public class EventStore {
   public List<Event> getEvents() {
     List<Event> toBeDisplayed = new ArrayList<>();
     for (int i = 0; i < DISPLAYCOUNT; i++) {
+      if(events.isEmpty()) {
+        break;
+      }
       Event storedEvent = events.get(i);
       toBeDisplayed.add(storedEvent);
     }

@@ -1,9 +1,7 @@
 <%@ page import="codeu.model.store.basic.UserStore" %>
-<%@ page import="codeu.model.store.basic.ConversationStore" %>
-<%@ page import="codeu.model.store.basic.MessageStore" %>
 <%@ page import="codeu.model.store.basic.EventStore" %>
-
-<%EventStore eventStore = EventStore.getInstance() %>
+<%@ page import="codeu.model.data.Event" %>
+<%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,6 +12,7 @@
 <body>
   <%String name = (String) request.getSession().getAttribute("user");
     boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
+    EventStore eventStore = EventStore.getInstance();
     %>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
@@ -35,7 +34,7 @@
         <h1>Your Activity Feed</h1>
         <%
         List<Event> events = eventStore.getEvents();
-        if (events == null || events.isEmpty) {
+        if (events == null || events.isEmpty()) {
         %>
           <p>There is no activity to display.</p>
         <%} else{ %>
