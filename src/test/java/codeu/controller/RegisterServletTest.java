@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codeu.model.data.Event;
+import codeu.model.store.basic.EventStore;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,8 +60,10 @@ public class RegisterServletTest {
     Mockito.when(mockRequest.getParameter("password")).thenReturn("test password");
 
     UserStore mockUserStore = Mockito.mock(UserStore.class);
+    EventStore mockEventStore = Mockito.mock(EventStore.class);
     Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(false);
     registerServlet.setUserStore(mockUserStore);
+    registerServlet.setEventStore(mockEventStore);
 
     registerServlet.doPost(mockRequest, mockResponse);
 

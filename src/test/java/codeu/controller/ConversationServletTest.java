@@ -17,6 +17,7 @@ package codeu.controller;
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
+import codeu.model.store.basic.EventStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
 import java.time.Instant;
@@ -42,6 +43,7 @@ public class ConversationServletTest {
   private HttpServletResponse mockResponse;
   private RequestDispatcher mockRequestDispatcher;
   private ConversationStore mockConversationStore;
+  private EventStore mockEventStore;
   private UserStore mockUserStore;
 
   @Before
@@ -59,6 +61,9 @@ public class ConversationServletTest {
 
     mockConversationStore = Mockito.mock(ConversationStore.class);
     conversationServlet.setConversationStore(mockConversationStore);
+
+    mockEventStore = Mockito.mock(EventStore.class);
+    conversationServlet.setEventStore(mockEventStore);
 
     mockUserStore = Mockito.mock(UserStore.class);
     conversationServlet.setUserStore(mockUserStore);
@@ -155,6 +160,8 @@ public class ConversationServletTest {
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
             Instant.now());
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
+
+    //Mockito.when(mockUserStore.getUser("test_username").getId()).thenReturn(fakeUser.getId());
 
     Mockito.when(mockConversationStore.isTitleTaken("test_conversation")).thenReturn(false);
 
