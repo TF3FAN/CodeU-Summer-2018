@@ -153,6 +153,30 @@ public class ChatServlet extends HttpServlet {
 
     messageStore.addMessage(message);
 
+    int startInd = cleanedMessageContent.indexOf('@');
+    int help = 0;
+    UserStore users = UserStore.getInstance();
+    int endInd = cleanedMessageContent.length();
+    while (startInd != -1 && startInd < cleanedMessageContent.length()-1){
+      for (int i = startInd+1; i < cleanedMessageContent.length(); i++){
+        if (!(cleanedMessageContent.charAt(i)>= 65 && cleanedMessageContent.charAt(i) <= 90)&&
+        !(cleanedMessageContent.charAt(i)>= 97 && cleanedMessageContent.charAt(i) <= 122) && !(cleanedMessageContent.charAt(i)>= 48
+        && cleanedMessageContent.charAt(i) <= 57)){
+          endInd = i;
+          break;
+        }
+      }
+      if (users.isUserRegistered(cleanedMessageContent.substring(startInd + 1, endInd))){
+        users.getUser(cleanedMessageContent.substring(startInd+1, endInd)).addMentions(cleanedMessageContent, conversationTitle);
+        help = endInd;
+      }
+      else{
+        help = startInd;
+      }
+      endInd = cleanedMessageContent.length();
+      startInd = cleanedMessageContent.indexOf('@', startInd + 1);
+    }
+
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);
   }
