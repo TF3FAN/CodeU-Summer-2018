@@ -74,7 +74,7 @@ public class RegisterServlet extends HttpServlet {
 
     User user = new User(UUID.randomUUID(), username, hashedPassword, Instant.now());
     userStore.addUser(user);
-    Event event = new Event(UUID.randomUUID(), user);
+    Event event = new Event(UUID.randomUUID(), user.getName(), Instant.now(), user.getName() + " joined!");
     eventStore.addEvent(event);
 
     response.sendRedirect("/login");

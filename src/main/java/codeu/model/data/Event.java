@@ -10,61 +10,26 @@ import java.util.UUID;
 public class Event {
   private final UUID id;
   private final String name;
-  private final Message message;
   private final Instant creation;
   private final String description;
-  private final Conversation conversation;
 
   /**
    * Constructs a new Event.
    *
-   * @param id the id of the User who created this Event
-   * @param name the username of the User
-   * @param message the message the User wrote, if applicable
-   * @param creation the creation time of this Event
+   * @param id the id of the Event
+   * @param name the username of who prompted the creation of this Event
+   * @param creation the time the Event was created
    * @param description the description of this Event to be displayed
-   * @param conversation the conversation the User created, is applicable
    */
 
   /**
-    This constructor is called when a new User is created.
+    Created a new Event.
    */
-  public Event(UUID id, User user) {
+  public Event(UUID id, String name, Instant creation, String description) {
     this.id = id;
-    name = user.getName();
-    message = null;
-    creation = user.getCreationTime();
-    conversation = null;
-    description = name + " joined!";
-  }
-
-  /*
-    This constructor is called when a new Conversation is created.
-   */
-  public Event(UUID id, Conversation convo, String username) {
-    this.id = id;
-    name = username;
-    message = null;
-    creation = convo.getCreationTime();
-    conversation = convo;
-    description = name + " created a new conversation: " + conversation.title + "!";
-  }
-
-  /*
-    This constructor is called when a new Message is created.
-   */
-  public Event(UUID id, Message thisMessage, String username, Conversation conversation) {
-    this.id = id;
-    name = username;
-    message = thisMessage;
-    creation = thisMessage.getCreationTime();
-    this.conversation = conversation;
-    description = name + "sent a mesage in " + conversation.title;
-  }
-
-
-  public String display() {
-    return this.getDescription();
+    this.name = name;
+    this.creation = creation;
+    this.description = description;
   }
 
   /** Returns the UUID. */
@@ -76,17 +41,9 @@ public class Event {
     return name;
   }
 
-  /** Return the message of this Event. */
-  public Message getMessage() {
-    return message;
-  }
   /** Returns the generated  description of this Event. */
   public String getDescription() {
     return description;
-  }
-
-  public Conversation getConversation() {
-    return conversation;
   }
 
   /** Returns the creation time of this Event. */
