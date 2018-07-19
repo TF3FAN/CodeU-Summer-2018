@@ -78,7 +78,6 @@ public class User {
     */
   public void setPersistentMentions(ArrayList<Mention> storedMentions){
     if (storedMentions == null){
-      System.out.println(storedMentions);
       return;
     }
     mentions = storedMentions;
