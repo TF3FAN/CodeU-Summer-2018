@@ -150,6 +150,29 @@ public class PersistentDataStore {
     return messages;
   }
 
+  public List<Event> loadEvents() throws PersistentDataStoreException {
+
+    List<Event> events = new ArrayList<>();
+
+    //Retrieve all events from the datastore.
+    Query query = new Query("chat-events").addSort("creation_time", SortDirection.ASCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      try {
+        UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
+        String username = (String) entity.getProperty("username");
+        String description = (String) entity.getProperty("description");
+        Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
+        Event event = new Event(uuid, username, creationTime, description);
+        events.add(event);
+      } catch (Exception e) {
+        throw new PersistentDataStoreException(e);
+      }
+    }
+    return events;
+  }
+
   /** Write a User object to the Datastore service. */
   public void writeThrough(User user) {
     Entity userEntity = new Entity("chat-users", user.getId().toString());
@@ -185,9 +208,7 @@ public class PersistentDataStore {
   public void writeThrough(Event event) {
     Entity eventEntity = new Entity("chat-events", event.getID().toString());
     eventEntity.setProperty("uuid", event.getID().toString());
-    eventEntity.setProperty("creator", event.getName());
-    eventEntity.setProperty("message", event.getMessage());
-    eventEntity.setProperty("conversation", event.getConversation().getTitle());
+    eventEntity.setProperty("username", event.getName());
     eventEntity.setProperty("decription", event.getDescription());
     eventEntity.setProperty("creation_time", event.getCreationTime().toString());
   }

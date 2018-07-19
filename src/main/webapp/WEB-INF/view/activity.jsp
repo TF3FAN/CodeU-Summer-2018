@@ -12,7 +12,7 @@
 <body>
   <%String name = (String) request.getSession().getAttribute("user");
     boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
-    EventStore eventStore = EventStore.getInstance();
+    List<Event> events = (List<Event>) request.getAttribute("events");
     %>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
@@ -33,14 +33,13 @@
       <% if(name != null){%>
         <h1>Your Activity Feed</h1>
         <%
-        List<Event> events = eventStore.getEvents();
         if (events == null || events.isEmpty()) {
         %>
           <p>There is no activity to display.</p>
         <%} else{ %>
           <ul class="mdl-list">
             <% for(Event event : events){ %>
-              <li><%= event.display() %></li>
+              <li><%= event.getDescription() %></li>
               <%}%>
           </ul>
           <%}%>

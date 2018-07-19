@@ -60,9 +60,23 @@ public class EventStore {
     persistentStorageAgent.writeThrough(event);
   }
 
+  /** Access the current set of conversations known to the application. */
+  public List<Event> getAllEvents() {
+    return events;
+  }
+
+  /**
+   * Sets the List of Events stored by this UserStore. This should only be called once, when the data
+   * is loaded from Datastore.
+   */
+  public void setEvents(List<Event> events) {
+    this.events = events;
+  }
   /** Collects 10 most recently created Events for display on Activity Feed. */
   public List<Event> getEvents() {
+
     List<Event> toBeDisplayed = new ArrayList<>();
+
     for (int i = 0; i < DISPLAYCOUNT; i++) {
       if(events.isEmpty()) {
         break;
