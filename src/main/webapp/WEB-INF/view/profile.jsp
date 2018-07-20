@@ -25,30 +25,31 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-
+  <%String name = (String) request.getSession().getAttribute("user");%>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
-    <% if(admin) {%>
+    <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
+    if(admin) {%>
       <a href="/admin.jsp">Admin</a>
       <% } %> 
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a href="/profile/<%=request.getSession().getAttribute("user")%>">My Profile</a>
-      <%--<a>My Profile <%= request.getSession().getAttribute("user") %>!</a>--%>
+    <% if(name != null){ %>
+      <a href="/profile/<%=name %>">My Profile</a>
+      <%--<a>My Profile <%= name %>!</a>--%>
       <a href="/mentions">Mentions</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
 
-    <%--<a href="/profile/<%=request.getSession().getAttribute("user")%>">My Profile</a>--%>
+    <%--<a href="/profile/<%=name %>">My Profile</a>--%>
   </nav>
 
   <div id="container">
 
-    <h1> <%=request.getParameter("user")%>'s Profile Page </h1>
+    <h1> <%=name%>'s Profile Page </h1>
 
-    <label for="about"><b>About <%=request.getParameter("user")%></b></label>
+    <label for="about"><b>About <%=name%></b></label>
     <br/>
 
     <% if(request.getSession().getAttribute("user") != null &&
