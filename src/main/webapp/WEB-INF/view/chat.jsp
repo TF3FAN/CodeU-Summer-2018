@@ -54,6 +54,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <% if (name != null) { %>
         <a>Hello <%= name %>!</a>
         <a href="/mentions">Mentions</a>
+        <a href="/activity">Activity</a>
     <% } else { %>
       <a href="/login">Login</a>
     <% } %>
