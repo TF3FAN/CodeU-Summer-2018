@@ -29,6 +29,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import codeu.model.data.Mention;
 
 /**
  * This class handles all interactions with Google App Engine's Datastore service. On startup it
@@ -69,6 +70,8 @@ public class PersistentDataStore {
         String passwordHash = (String) entity.getProperty("password_hash");
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
         User user = new User(uuid, userName, passwordHash, creationTime);
+        user.setPersistentMentions(convertStringToMentionArr((ArrayList) entity.getProperty("mentions")));
+
         users.add(user);
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
@@ -188,6 +191,7 @@ public class PersistentDataStore {
     userEntity.setProperty("username", user.getName());
     userEntity.setProperty("password_hash", user.getPasswordHash());
     userEntity.setProperty("creation_time", user.getCreationTime().toString());
+    userEntity.setProperty("mentions", convertMentionToStringArr(user.getMentions()));
     datastore.put(userEntity);
   }
 
@@ -228,5 +232,26 @@ public class PersistentDataStore {
     datastore.put(eventEntity);
   }
 
-}
+  /** Convert Mentions to a valid property type. */
+  public ArrayList<String> convertMentionToStringArr(ArrayList<Mention> mentionArray){
+    ArrayList<String> stringArray = new ArrayList<String>();
+    for (Mention x: mentionArray){
+      stringArray.add(x.getMessage());
+      stringArray.add(x.getConversation());
+    }
+    return stringArray;
+  }
 
+  /** Convert String Array of mentions to Mention Array*/
+  public ArrayList<Mention> convertStringToMentionArr(ArrayList<String> stringArray){
+    ArrayList<Mention> mentionArray = new ArrayList<Mention>();
+    if (stringArray == null){
+      return mentionArray;
+    }
+    for (int i = 0; i < stringArray.size()-1; i++){
+      mentionArray.add(new Mention(stringArray.get(i), stringArray.get(i+1)));
+    }
+    return mentionArray;
+  }
+
+}
