@@ -1,6 +1,7 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Event;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
@@ -145,5 +146,40 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(authorTwo, resultMessageTwo.getAuthorId());
     Assert.assertEquals(contentTwo, resultMessageTwo.getContent());
     Assert.assertEquals(creationTwo, resultMessageTwo.getCreationTime());
+  }
+
+  @Test
+  public void testSaveAndLoadEvents() throws PersistentDataStoreException{
+    UUID idOne = UUID.fromString("10000000-2222-3333-4444-555555555555");
+    String nameOne = "test_username_one";
+    String descriptionOne = "test_event_one";
+    Instant creationOne = Instant.ofEpochMilli(1000);
+    Event testEventOne = new Event(idOne, nameOne, creationOne, descriptionOne);
+
+    UUID idTwo = UUID.fromString("10000001-2222-3333-4444-555555555555");
+    String nameTwo = "test_username_two";
+    String descriptionTwo = "test_event_two";
+    Instant creationTwo = Instant.ofEpochMilli(2000);
+    Event testEventTwo = new Event(idTwo, nameTwo, creationTwo, descriptionTwo);
+
+    // save
+    persistentDataStore.writeThrough(testEventOne);
+    persistentDataStore.writeThrough(testEventTwo);
+
+    // load
+    List<Event> resultEvents = persistentDataStore.loadEvents();
+
+    // confirm that what we saved matches what we loaded
+    Event resultEventOne = resultEvents.get(0);
+    Assert.assertEquals(idOne, resultEventOne.getID());
+    Assert.assertEquals(nameOne, resultEventOne.getName());
+    Assert.assertEquals(descriptionOne, resultEventOne.getDescription());
+    Assert.assertEquals(creationOne, resultEventOne.getCreationTime());
+
+    Event resultEventTwo = resultEvents.get(1);
+    Assert.assertEquals(idTwo, resultEventTwo.getID());
+    Assert.assertEquals(nameTwo, resultEventTwo.getName());
+    Assert.assertEquals(descriptionTwo, resultEventTwo.getDescription());
+    Assert.assertEquals(creationTwo, resultEventTwo.getCreationTime());
   }
 }

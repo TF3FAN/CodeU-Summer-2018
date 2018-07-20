@@ -64,9 +64,9 @@ public class EventStore {
   public List<Event> getAllEvents() {
     return events;
   }
-
+  
   /**
-   * Sets the List of Events stored by this UserStore. This should only be called once, when the data
+   * Sets the List of Events stored by this EventStore. This should only be called once, when the data
    * is loaded from Datastore.
    */
   public void setEvents(List<Event> events) {

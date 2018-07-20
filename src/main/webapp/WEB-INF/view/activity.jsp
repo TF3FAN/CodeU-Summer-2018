@@ -7,7 +7,22 @@
 <html>
 <head>
   <title>Activity Feed</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/main.css" type="text/css">
+
+  <style>
+    #activity {
+      background-color: white;
+      height: 500px;
+      overflow-y: scroll
+    }
+  </style>
+  
+  <script>
+    function scrollActivity() {
+      var activityDiv = document.getElementById('activity');
+      activityDiv.scrollTop = activityDiv.scrollHeight;
+    };
+  </script>
 </head>
 <body>
   <%String name = (String) request.getSession().getAttribute("user");
@@ -29,9 +44,14 @@
       <%}%>
   </nav>
   <div id="container">
-    <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
+
+    <h1>Activity Feed</h1>
+
+    <hr/>
+    
+    <div id="activity">
+
       <% if(name != null){%>
-        <h1>Your Activity Feed</h1>
         <%
         if (events == null || events.isEmpty()) {
         %>
@@ -39,13 +59,12 @@
         <%} else{ %>
           <ul class="mdl-list">
             <% for(Event event : events){ %>
-              <li><%= event.getDescription() %></li>
+              <li> <b><%=event.getCreationTime().toString()%></b> : <%= event.getDescription() %></li>
               <%}%>
           </ul>
           <%}%>
           
       <%} else{%>
-        <h1>Activity Feed</h1>
         <p>Please log in.</p>
         <%}%>
       </div>

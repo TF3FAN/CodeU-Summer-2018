@@ -161,7 +161,7 @@ public class ChatServlet extends HttpServlet {
             Instant.now());
     messageStore.addMessage(message);
     Event event = new Event(UUID.randomUUID(), user.getName(), Instant.now(),
-            user.getName() + "sent a message in: " + conversation.getTitle() + ": " + message.getContent());
+            user.getName() + " sent a message in " + conversation.getTitle() + " --> " + message.getContent());
     eventStore.addEvent(event);
 
     // redirect to a GET request

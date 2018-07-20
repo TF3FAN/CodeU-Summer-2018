@@ -209,8 +209,9 @@ public class PersistentDataStore {
     Entity eventEntity = new Entity("chat-events", event.getID().toString());
     eventEntity.setProperty("uuid", event.getID().toString());
     eventEntity.setProperty("username", event.getName());
-    eventEntity.setProperty("decription", event.getDescription());
+    eventEntity.setProperty("description", event.getDescription());
     eventEntity.setProperty("creation_time", event.getCreationTime().toString());
+    datastore.put(eventEntity);
   }
 
 }
