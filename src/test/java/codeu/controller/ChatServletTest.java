@@ -18,6 +18,7 @@ import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
+import codeu.model.store.basic.EventStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
@@ -45,6 +46,7 @@ public class ChatServletTest {
   private RequestDispatcher mockRequestDispatcher;
   private ConversationStore mockConversationStore;
   private MessageStore mockMessageStore;
+  private EventStore mockEventStore;
   private UserStore mockUserStore;
 
   @Before
@@ -65,6 +67,9 @@ public class ChatServletTest {
 
     mockMessageStore = Mockito.mock(MessageStore.class);
     chatServlet.setMessageStore(mockMessageStore);
+
+    mockEventStore = Mockito.mock(EventStore.class);
+    chatServlet.setEventStore(mockEventStore);
 
     mockUserStore = Mockito.mock(UserStore.class);
     chatServlet.setUserStore(mockUserStore);

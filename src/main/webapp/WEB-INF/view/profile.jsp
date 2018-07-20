@@ -37,6 +37,7 @@
       <a href="/profile/<%=name %>">My Profile</a>
       <%--<a>My Profile <%= name %>!</a>--%>
       <a href="/mentions">Mentions</a>
+      <a href="/activity">Activity</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>

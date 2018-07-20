@@ -15,6 +15,7 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Event;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentDataStore;
@@ -89,6 +90,17 @@ public class PersistentStorageAgent {
     return persistentDataStore.loadMessages();
   }
 
+  /**
+   * Retieve all Event object from the DataStore serive. The returned list may be empty.
+   *
+   * @throws PersistentDataStoreException if an error was detected during the load from the
+   *      DataStore service
+   *
+   */
+  public List<Event> loadEvents() throws PersistentDataStoreException {
+    return persistentDataStore.loadEvents();
+  }
+
   /** Write a User object to the Datastore service. */
   public void writeThrough(User user) {
     persistentDataStore.writeThrough(user);
@@ -102,5 +114,10 @@ public class PersistentStorageAgent {
   /** Write a Conversation object to the Datastore service. */
   public void writeThrough(Message message) {
     persistentDataStore.writeThrough(message);
+  }
+
+  /** Write a Conversation object to the Datastore service. */
+  public void writeThrough(Event event) {
+    persistentDataStore.writeThrough(event);
   }
 }

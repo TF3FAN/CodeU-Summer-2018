@@ -15,6 +15,7 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Event;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.persistence.PersistentDataStoreException;
@@ -152,6 +153,37 @@ public class PersistentDataStore {
     return messages;
   }
 
+  public List<Event> loadEvents() throws PersistentDataStoreException {
+
+    List<Event> events = new ArrayList<>();
+
+    //Retrieve all events from the datastore.
+    Query query = new Query("chat-events").addSort("creation_time", SortDirection.ASCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      try {
+        UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
+        String username = (String) entity.getProperty("username");
+        String description = (String) entity.getProperty("description");
+        Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
+        String conversationTitle = (String) entity.getProperty("conversation");
+        String messageContent = (String) entity.getProperty("message");
+        Event event = new Event(uuid, username, creationTime, description);
+        if (messageContent != null) {
+          event.setMessage(messageContent);
+        }
+        if (conversationTitle != null) {
+          event.setConversation(conversationTitle);
+        }
+        events.add(event);
+      } catch (Exception e) {
+        throw new PersistentDataStoreException(e);
+      }
+    }
+    return events;
+  }
+
   /** Write a User object to the Datastore service. */
   public void writeThrough(User user) {
     Entity userEntity = new Entity("chat-users", user.getId().toString());
@@ -182,6 +214,22 @@ public class PersistentDataStore {
     conversationEntity.setProperty("title", conversation.getTitle());
     conversationEntity.setProperty("creation_time", conversation.getCreationTime().toString());
     datastore.put(conversationEntity);
+  }
+
+  /**Write an Event object to the DataStore service. */
+  public void writeThrough(Event event) {
+    Entity eventEntity = new Entity("chat-events", event.getID().toString());
+    eventEntity.setProperty("uuid", event.getID().toString());
+    eventEntity.setProperty("username", event.getName());
+    eventEntity.setProperty("description", event.getDescription());
+    eventEntity.setProperty("creation_time", event.getCreationTime().toString());
+    if (event.hasMessage()) {
+      eventEntity.setProperty("message", event.getMessage());
+    }
+    if (event.hasConversation()) {
+      eventEntity.setProperty("conversation", event.getConversation());
+    }
+    datastore.put(eventEntity);
   }
 
   /** Convert Mentions to a valid property type. */

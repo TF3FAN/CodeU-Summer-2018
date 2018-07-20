@@ -15,9 +15,11 @@
 package codeu.controller;
 
 import codeu.model.data.Conversation;
+import codeu.model.data.Event;
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
+import codeu.model.store.basic.EventStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
@@ -41,6 +43,9 @@ public class ChatServlet extends HttpServlet {
   /** Store class that gives access to Messages. */
   private MessageStore messageStore;
 
+  /** Store class that gives access to Events. */
+  private EventStore eventStore;
+
   /** Store class that gives access to Users. */
   private UserStore userStore;
 
@@ -51,6 +56,7 @@ public class ChatServlet extends HttpServlet {
     setConversationStore(ConversationStore.getInstance());
     setMessageStore(MessageStore.getInstance());
     setUserStore(UserStore.getInstance());
+    setEventStore(EventStore.getInstance());
   }
 
   /**
@@ -77,6 +83,9 @@ public class ChatServlet extends HttpServlet {
     this.userStore = userStore;
   }
 
+  void setEventStore(EventStore eventStore) {
+    this.eventStore = eventStore;
+  }
   /**
    * This function fires when a user navigates to the chat page. It gets the conversation title from
    * the URL, finds the corresponding Conversation, and fetches the messages in that Conversation.
@@ -151,8 +160,12 @@ public class ChatServlet extends HttpServlet {
             user.getId(),
             cleanedMessageContent,
             Instant.now());
-
     messageStore.addMessage(message);
+    Event event = new Event(UUID.randomUUID(), user.getName(), Instant.now(),
+            user.getName() + " sent a message in " );
+    event.setConversation(conversation.getTitle());
+    event.setMessage(message.getContent());
+    eventStore.addEvent(event);
 
     int startInd = cleanedMessageContent.indexOf('@');
     int help = 0;
