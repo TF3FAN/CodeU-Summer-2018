@@ -97,16 +97,6 @@ public class ConversationStore {
     return null;
   }
 
-  /**DFind and return the Conversation with the given UUID. */
-  public Conversation getConversationWithID(UUID id) {
-    for (Conversation conversation : conversations) {
-      if (conversation.getId().equals(id)) {
-        return conversation;
-      }
-    }
-    return null;
-  }
-
   /** Sets the List of Conversations stored by this ConversationStore. */
   public void setConversations(List<Conversation> conversations) {
     this.conversations = conversations;

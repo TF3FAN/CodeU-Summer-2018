@@ -53,7 +53,7 @@
         <li><strong>The Team:</strong> The team consists of Gauri Jain and
           Ernesto Rojas. Gauri's work on her guided project added the admin system 
           and admin page. Ernesto's guided project work brought the activity feed. 
-          Our project advisor is Becky Qui. </li>
+          Our project advisor is Becky Qiu. </li>
         <li><strong>The App Features:</strong> We focused on brining meanigful
         functionality to the application. For example, the admin page displays the
         quantity of Conversations, Messages, and Users on the app to an admin. Our
