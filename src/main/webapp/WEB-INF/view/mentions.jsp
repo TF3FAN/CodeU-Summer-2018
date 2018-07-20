@@ -4,7 +4,6 @@
 <%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.data.Mention" %>
 
-
 <!DOCTYPE html>
 <html>
 <head>

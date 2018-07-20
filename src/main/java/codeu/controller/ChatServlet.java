@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import codeu.model.store.persistence.PersistentStorageAgent;
 
 /** Servlet class responsible for the chat page. */
 public class ChatServlet extends HttpServlet {
@@ -168,6 +169,7 @@ public class ChatServlet extends HttpServlet {
       }
       if (users.isUserRegistered(cleanedMessageContent.substring(startInd + 1, endInd))){
         users.getUser(cleanedMessageContent.substring(startInd+1, endInd)).addMentions(cleanedMessageContent, conversationTitle);
+        PersistentStorageAgent.getInstance().writeThrough(users.getUser(cleanedMessageContent.substring(startInd+1, endInd)));
         help = endInd;
       }
       else{

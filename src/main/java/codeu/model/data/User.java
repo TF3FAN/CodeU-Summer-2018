@@ -68,7 +68,19 @@ public class User {
     return mentions;
   }
 
+  /** Adds a new mention to list of mentions*/
   public void addMentions(String msg, String conversation){
     mentions.add(new Mention(msg, conversation));
   }
+
+  /** Store the mentions from persistent storage into user's mentions. Should
+    * only be used for when persistent storage writes through stored information
+    */
+  public void setPersistentMentions(ArrayList<Mention> storedMentions){
+    if (storedMentions == null){
+      return;
+    }
+    mentions = storedMentions;
+  }
+
 }
