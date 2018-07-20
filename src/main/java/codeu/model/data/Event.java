@@ -1,8 +1,5 @@
 package codeu.model.data;
 
-import codeu.model.store.basic.ConversationStore;
-import codeu.model.store.basic.UserStore;
-
 import java.time.Instant;
 import java.util.UUID;
 
@@ -12,6 +9,8 @@ public class Event {
   private final String name;
   private final Instant creation;
   private final String description;
+  private String conversation;
+  private String message;
 
   /**
    * Constructs a new Event.
@@ -32,6 +31,33 @@ public class Event {
     this.description = description;
   }
 
+  /**
+   * Adds message to event.
+   */
+  public void setMessage(String messageContent) {
+    message = messageContent;
+  }
+
+  /**
+   * Adds conversation title to event.
+   */
+  public void setConversation(String conversationTitle) {
+    conversation = conversationTitle;
+  }
+
+  /**
+   * Returns whether Event class has a Message.
+   */
+  public boolean hasMessage() {
+    return this.message != null;
+  }
+  /**
+   * Returns whether Event class has a  Conversation.
+   */
+  public boolean hasConversation() {
+    return this.conversation != null;
+  }
+
   /** Returns the UUID. */
   public UUID getID() {
     return id;
@@ -49,5 +75,15 @@ public class Event {
   /** Returns the creation time of this Event. */
   public Instant getCreationTime() {
     return creation;
+  }
+
+  /** Returns the message of this Event, if applicable. */
+  public String getMessage() {
+    return message;
+  }
+
+  /** Return the conversation of this Event, if applicable. */
+  public String getConversation() {
+    return conversation;
   }
 }

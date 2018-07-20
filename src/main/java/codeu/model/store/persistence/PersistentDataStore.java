@@ -164,7 +164,15 @@ public class PersistentDataStore {
         String username = (String) entity.getProperty("username");
         String description = (String) entity.getProperty("description");
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
+        String conversationTitle = (String) entity.getProperty("conversation");
+        String messageContent = (String) entity.getProperty("message");
         Event event = new Event(uuid, username, creationTime, description);
+        if (messageContent != null) {
+          event.setMessage(messageContent);
+        }
+        if (conversationTitle != null) {
+          event.setConversation(conversationTitle);
+        }
         events.add(event);
       } catch (Exception e) {
         throw new PersistentDataStoreException(e);
@@ -211,6 +219,12 @@ public class PersistentDataStore {
     eventEntity.setProperty("username", event.getName());
     eventEntity.setProperty("description", event.getDescription());
     eventEntity.setProperty("creation_time", event.getCreationTime().toString());
+    if (event.hasMessage()) {
+      eventEntity.setProperty("message", event.getMessage());
+    }
+    if (event.hasConversation()) {
+      eventEntity.setProperty("conversation", event.getConversation());
+    }
     datastore.put(eventEntity);
   }
 

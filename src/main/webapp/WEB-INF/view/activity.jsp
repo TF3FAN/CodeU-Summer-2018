@@ -1,7 +1,12 @@
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.format.FormatStyle" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.EventStore" %>
 <%@ page import="codeu.model.data.Event" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.time.ZoneId" %>
+<%@ page import="java.time.Instant" %>
 
 <!DOCTYPE html>
 <html>
@@ -28,6 +33,10 @@
   <%String name = (String) request.getSession().getAttribute("user");
     boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
     List<Event> events = (List<Event>) request.getAttribute("events");
+    DateTimeFormatter formatter =
+        DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
+                     .withLocale( Locale.US )
+                     .withZone( ZoneId.systemDefault() );
     %>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
@@ -59,7 +68,22 @@
         <%} else{ %>
           <ul class="mdl-list">
             <% for(Event event : events){ %>
-              <li> <b><%=event.getCreationTime().toString()%></b> : <%= event.getDescription() %></li>
+              <% Instant timeStamp = event.getCreationTime(); %>
+
+              <li> <b><%=formatter.format(timeStamp)%></b>: 
+                <%= event.getDescription() %>
+
+              <% if (event.hasConversation()) {%>
+                 
+                   <a href="/chat/<%= event.getConversation()%>"> 
+                    <%= event.getConversation() %></a>
+                   <%}%>
+              
+              <% if (event.hasMessage()) {%>
+
+                   "<%=event.getMessage()%>"
+                   <%}%>
+              </li>
               <%}%>
           </ul>
           <%}%>
