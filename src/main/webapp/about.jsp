@@ -45,23 +45,25 @@
 
       <h1>About the CodeU Chat App</h1>
       <p>
-        This is an example chat application designed to be a starting point
-        for your CodeU project team work. Here's some stuff to think about:
+        This is the Team Vogue chat App! 
       </p>
 
       <ul>
-        <li><strong>Algorithms and data structures:</strong> We've made the app
-            and the code as simple as possible. You will have to extend the
-            existing data structures to support your enhancements to the app,
-            and also make changes for performance and scalability as your app
-            increases in complexity.</li>
-        <li><strong>Look and feel:</strong> The focus of CodeU is on the Java
-          side of things, but if you're particularly interested you might use
-          HTML, CSS, and JavaScript to make the chat app prettier.</li>
-        <li><strong>Customization:</strong> Think about a group you care about.
-          What needs do they have? How could you help? Think about technical
-          requirements, privacy concerns, and accessibility and
-          internationalization.</li>
+        <li><strong>The Team:</strong> The team consists of Gauri Jain and
+          Ernesto Rojas. Gauri's work on her guided project added the admin system 
+          and admin page. Ernesto's guided project work brought the activity feed. 
+          Our project advisor is Becky Qui. </li>
+        <li><strong>The App Features:</strong> We focused on brining meanigful
+        functionality to the application. For example, the admin page displays the
+        quantity of Conversations, Messages, and Users on the app to an admin. Our
+        activity feed notifies Users about the creation of Conversations, Messages,
+        and other Users. These notifications, which are chronologically listed, also
+        provide a hyperlink to the Conversation, if applicable.</li>
+        <li><strong>Open Ended Project:</strong> For our open ended project, we 
+          added the idea of tagging and mentions of our app. In messages, users can
+          tag Users by typing '@' followed by a valid username. Mentions are messages
+          that users are tagged in. All of any user's Mentions can be viewed on the 
+        dedicated Mentions page.</li>
       </ul>
 
       <p>
