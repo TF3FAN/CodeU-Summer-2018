@@ -36,7 +36,7 @@
     DateTimeFormatter formatter =
         DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                      .withLocale( Locale.US )
-                     .withZone( ZoneId.systemDefault() );
+                     .withZone( ZoneId.of("America/Los_Angeles") );
     %>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
