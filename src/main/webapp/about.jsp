@@ -24,15 +24,16 @@
 <body>
   <%String name = (String) request.getSession().getAttribute("user");%>
   <nav>
-    <a id="navTitle" href="/">CodeU Chat App - Team Vogue</a>
-    <a href="/conversations">Conversations</a>
+    <a id="navTitle" href="/">Team Vogue Chats</a>
     <% if(name != null){ %>
       <a>Hello <%= name %>!</a>
+      <a href="/profile/<%=name %>">My Profile</a>
       <a href="/mentions">Mentions</a>
       <a href="/activity">Activity</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
+    <a href="/conversations">Conversations</a>
     <a href="/about.jsp">About</a>
     <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
       if (admin){%>
@@ -46,13 +47,13 @@
 
       <h1>About the CodeU Chat App</h1>
       <p>
-        This is the Team Vogue chat App! 
+        This is the Team Vogue chat App!
       </p>
 
       <ul>
         <li><strong>The Team:</strong> The team consists of Gauri Jain and
-          Ernesto Rojas. Gauri's work on her guided project added the admin system 
-          and admin page. Ernesto's guided project work brought the activity feed. 
+          Ernesto Rojas. Gauri's work on her guided project added the admin system
+          and admin page. Ernesto's guided project work brought the activity feed.
           Our project advisor is Becky Qiu. </li>
         <li><strong>The App Features:</strong> We focused on brining meanigful
         functionality to the application. For example, the admin page displays the
@@ -60,20 +61,13 @@
         activity feed notifies Users about the creation of Conversations, Messages,
         and other Users. These notifications, which are chronologically listed, also
         provide a hyperlink to the Conversation, if applicable.</li>
-        <li><strong>Open Ended Project:</strong> For our open ended project, we 
+        <li><strong>Open Ended Project:</strong> For our open ended project, we
           added the idea of tagging and mentions of our app. In messages, users can
           tag Users by typing '@' followed by a valid username. Mentions are messages
-          that users are tagged in. All of any user's Mentions can be viewed on the 
+          that users are tagged in. All of any user's Mentions can be viewed on the
         dedicated Mentions page.</li>
       </ul>
 
-      <p>
-        This is your code now. Get familiar with it and get comfortable
-        working with your team to plan and make changes. Start by updating the
-        homepage and this about page to tell your users more about your team.
-        This page should also be used to describe the features and improvements
-        you've added.
-      </p>
     </div>
   </div>
 </body>

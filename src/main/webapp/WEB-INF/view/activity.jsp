@@ -21,7 +21,7 @@
       overflow-y: scroll
     }
   </style>
-  
+
   <script>
     function scrollActivity() {
       var activityDiv = document.getElementById('activity');
@@ -39,15 +39,16 @@
                      .withZone( ZoneId.systemDefault() );
     %>
   <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/conversations">Conversations</a>
+    <a id="navTitle" href="/">Team Vogue Chats</a>
     <% if(name != null){%>
       <a>Hello <%= name %>!</a>
+      <a href="/profile/<%=name %>">My Profile</a>
       <a href="/mentions">Mentions</a>
       <a href="/activity">Activity</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
+    <a href="/conversations">Conversations</a>
     <a href="/about.jsp">About</a>
     <% if(admin){%>
     <a href="/admin">Admin</a>
@@ -58,7 +59,7 @@
     <h1>Activity Feed</h1>
 
     <hr/>
-    
+
     <div id="activity">
 
       <% if(name != null){%>
@@ -71,15 +72,15 @@
             <% for(Event event : events){ %>
               <% Instant timeStamp = event.getCreationTime(); %>
 
-              <li> <b><%=formatter.format(timeStamp)%></b>: 
+              <li> <b><%=formatter.format(timeStamp)%></b>:
                 <%= event.getDescription() %>
 
               <% if (event.hasConversation()) {%>
-                 
-                   <a href="/chat/<%= event.getConversation()%>"> 
+
+                   <a href="/chat/<%= event.getConversation()%>">
                     <%= event.getConversation() %></a>
                    <%}%>
-              
+
               <% if (event.hasMessage()) {%>
 
                    "<%=event.getMessage()%>"
@@ -88,7 +89,7 @@
               <%}%>
           </ul>
           <%}%>
-          
+
       <%} else{%>
         <p>Please log in.</p>
         <%}%>
