@@ -27,22 +27,21 @@
 <body>
   <%String name = (String) request.getSession().getAttribute("user");%>
   <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
-    if(admin) {%>
-      <a href="/admin.jsp">Admin</a>
-      <% } %> 
+    <a id="navTitle" href="/">Team Vogue Chats</a>
     <% if(name != null){ %>
+      <a>Hello <%=name%>!</a>
       <a href="/profile/<%=name %>">My Profile</a>
-      <%--<a>My Profile <%= name %>!</a>--%>
       <a href="/mentions">Mentions</a>
       <a href="/activity">Activity</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
+    <a href="/conversations">Conversations</a>
     <a href="/about.jsp">About</a>
-
+    <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
+    if(admin) {%>
+      <a href="/admin">Admin</a>
+      <% } %>
     <%--<a href="/profile/<%=name %>">My Profile</a>--%>
   </nav>
 
