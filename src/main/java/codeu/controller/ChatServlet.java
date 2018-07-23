@@ -167,8 +167,7 @@ public class ChatServlet extends HttpServlet {
     event.setMessage(message.getContent());
     eventStore.addEvent(event);
 
-    int startInd = cleanedMessageContent.indexOf('@');
-    int help = 0;
+    int startInd = cleanedMessageContent.indexOf('@'); 
     UserStore users = UserStore.getInstance();
     int endInd = cleanedMessageContent.length();
     while (startInd != -1 && startInd < cleanedMessageContent.length()-1){
@@ -180,13 +179,11 @@ public class ChatServlet extends HttpServlet {
           break;
         }
       }
-      if (users.isUserRegistered(cleanedMessageContent.substring(startInd + 1, endInd))){
-        users.getUser(cleanedMessageContent.substring(startInd+1, endInd)).addMentions(cleanedMessageContent, conversationTitle);
-        PersistentStorageAgent.getInstance().writeThrough(users.getUser(cleanedMessageContent.substring(startInd+1, endInd)));
-        help = endInd;
-      }
-      else{
-        help = startInd;
+      String possibleUser = cleanedMessageContent.substring(startInd + 1, endInd);
+      if (users.isUserRegistered(possibleUser)){
+        User foundUser = users.getUser(possibleUser);
+        foundUser.addMentions(cleanedMessageContent, conversation.getTitle());
+        users.updateUser(foundUser);
       }
       endInd = cleanedMessageContent.length();
       startInd = cleanedMessageContent.indexOf('@', startInd + 1);
