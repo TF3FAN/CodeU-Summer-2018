@@ -3,15 +3,32 @@
 <%@ page import="codeu.model.store.basic.MessageStore" %>
 <%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.data.Mention" %>
+<%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
 <html>
 <head>
   <title>Mentions</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/main.css" type="text/css">
+
+  <style>
+      #mentions {
+        background-color: white;
+        height: 500px;
+        overflow-y: scroll
+      }
+    </style>
+    
+    <script>
+      function scrollMentions() {
+        var mentionsDiv = document.getElementById('mentions');
+        mentionsDiv.scrollTop = mentionsDiv.scrollHeight;
+      };
+    </script>
 </head>
 <body>
   <%String name = (String) request.getSession().getAttribute("user");%>
+  <%List<Mention> userMentions = UserStore.getInstance().getUser(name).getMentions();%>
   <nav>
     <a id="navTitle" href="/">Team Vogue Chats</a>
     <% if(name != null){%>
@@ -30,15 +47,33 @@
       <% } %>
   </nav>
   <div id="container">
-    <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
+
       <h1>Your Mentions</h1>
-      <p>You will show messages you were mentioned in here! <%
-      if(name!= null){
-        for (Mention x: UserStore.getInstance().getUser(name).getMentions()){
-        %><%=x.getMessage()%> <%=x.getConversation()%>
-        <%}
-      }%>
-      </p>
+
+      <hr/>
+
+      <div id="mentions">
+
+          <% if(name != null){%>
+            <%
+            if (userMentions == null || userMentions.isEmpty()) {
+            %>
+              <p>You have not been mentioned yet.</p>
+            <%} else{ %>
+              <ul class="mdl-list">
+                <% for(Mention mention : userMentions){ %>
+                  <li> <a href="/chat/<%= mention.getConversation()%>"> 
+                        <%= mention.getConversation() %></a> : 
+                        <%= mention.getMessage() %>
+                  </li>
+                  <%}%>
+              </ul>
+              <%}%>
+              
+          <%} else{%>
+            <p>Please log in.</p>
+         <%}%>
+      
     </div>
   </div>
 </body>
