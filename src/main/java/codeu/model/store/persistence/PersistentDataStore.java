@@ -248,7 +248,7 @@ public class PersistentDataStore {
     if (stringArray == null){
       return mentionArray;
     }
-    for (int i = 0; i < stringArray.size()-1; i++){
+    for (int i = 0; i < stringArray.size()-1; i = i + 2){
       mentionArray.add(new Mention(stringArray.get(i), stringArray.get(i+1)));
     }
     return mentionArray;

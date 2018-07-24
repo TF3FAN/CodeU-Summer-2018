@@ -167,7 +167,7 @@ public class ChatServlet extends HttpServlet {
     event.setMessage(message.getContent());
     eventStore.addEvent(event);
 
-    int startInd = cleanedMessageContent.indexOf('@'); 
+    int startInd = cleanedMessageContent.indexOf('@');
     UserStore users = UserStore.getInstance();
     int endInd = cleanedMessageContent.length();
     while (startInd != -1 && startInd < cleanedMessageContent.length()-1){
