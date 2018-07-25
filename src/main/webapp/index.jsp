@@ -24,7 +24,7 @@
 <body>
   <%String name = (String) request.getSession().getAttribute("user");%>
   <nav>
-    <a id="navTitle" href="/">Team Vogue Chats</a>
+    <a id="navTitle" class="active" href="/">Team Vogue Chats</a>
     <% if(name != null){ %>
       <a>Hello <%= name %>!</a>
       <a href="/profile/<%=name %>">My Profile</a>

@@ -34,7 +34,7 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/conversations">Conversations</a>
-    <a href="/about.jsp">About</a>
+    <a class="active" href="/about.jsp">About</a>
     <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
       if (admin){%>
     <a href="/admin">Admin</a>

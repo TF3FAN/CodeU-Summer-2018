@@ -22,6 +22,34 @@
 <head>
   <title>Conversations</title>
   <link rel="stylesheet" href="/css/main.css">
+  <style>
+    input[type=text] {
+      width: 560px;
+      margin: 8px 0;
+      padding: 8px 15px 8px 15px;
+    }
+    .vertical-menu {
+      width: 560px;
+      height: 200px;
+      border: 3px solid #ccc;
+      border-radius: 4px;
+      overflow-y: scroll;
+    }
+    .vertical-menu a {
+      background-color: white;
+      color: black;
+      display: block;
+      padding: 12px;
+      text-decoration: none;
+    }
+    .vertical-menu a:hover {
+      color: white;
+      background-color: #176b72;
+    }
+    button {
+      margin: 8px 8px;
+    }
+  </style>
 </head>
 <body>
   <%String name = (String) request.getSession().getAttribute("user");%>
@@ -35,7 +63,7 @@
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/conversations">Conversations</a>
+    <a class="active" href="/conversations">Conversations</a>
     <a href="/about.jsp">About</a>
     <%boolean admin = name != null && UserStore.getInstance().isAdminRegistered(name);
       if (admin){%>
@@ -53,11 +81,9 @@
       <h1>New Conversation</h1>
       <form action="/conversations" method="POST">
           <div class="form-group">
-            <label class="form-control-label">Title:</label>
-          <input type="text" name="conversationTitle">
+          <input type="text" name="conversationTitle" placeholder="New Conversation Title...">
+          <button type="submit">Create</button>
         </div>
-
-        <button type="submit">Create</button>
       </form>
 
       <hr/>
@@ -75,16 +101,16 @@
     }
     else{
     %>
-      <ul class="mdl-list">
+    <div class="vertical-menu">
     <%
       for(Conversation conversation : conversations){
     %>
-      <li><a href="/chat/<%= conversation.getTitle() %>">
-        <%= conversation.getTitle() %></a></li>
+      <a href="/chat/<%= conversation.getTitle() %>">
+        <%= conversation.getTitle() %></a>
     <%
       }
     %>
-      </ul>
+    </div>
     <%
     }
     %>

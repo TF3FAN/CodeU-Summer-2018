@@ -31,7 +31,7 @@
       <a href="/mentions">Mentions</a>
       <a href="/activity">Activity</a>
     <% } else{ %>
-      <a href="/login">Login</a>
+      <a class="active" href="/login">Login</a>
     <% } %>
     <a href="/conversations">Conversations</a>
     <a href="/about.jsp">About</a>

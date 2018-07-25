@@ -15,7 +15,9 @@
       #mentions {
         background-color: white;
         height: 500px;
-        overflow-y: scroll
+        overflow-y: scroll;
+        border: 3px solid #ccc;
+        border-radius: 4px;
       }
     </style>
     
@@ -34,7 +36,7 @@
     <% if(name != null){%>
       <a>Hello <%=name%>!</a>
       <a href="/profile/<%=name %>">My Profile</a>
-      <a href="/mentions">Mentions</a>
+      <a class="active" href="/mentions">Mentions</a>
       <a href="/activity">Activity</a>
     <% } else{ %>
       <a href="/login">Login</a>
