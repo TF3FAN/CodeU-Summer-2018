@@ -30,7 +30,7 @@
     <a id="navTitle" href="/">Team Vogue Chats</a>
     <% if(name != null){ %>
       <a>Hello <%=name%>!</a>
-      <a href="/profile/<%=name %>">My Profile</a>
+      <a class="active" href="/profile/<%=name %>">My Profile</a>
       <a href="/mentions">Mentions</a>
       <a href="/activity">Activity</a>
     <% } else{ %>

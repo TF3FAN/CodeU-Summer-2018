@@ -29,7 +29,7 @@
     <a href="/conversations">Conversations</a>
     <a href="/about.jsp">About</a>
     <%if (admin){%>
-    <a href="/admin">Admin</a>
+    <a class="active" href="/admin">Admin</a>
       <%}%>
   </nav>
   <div id="container">

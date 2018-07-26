@@ -15,7 +15,9 @@
       #mentions {
         background-color: white;
         height: 500px;
-        overflow-y: scroll
+        overflow-y: scroll;
+        border: 3px solid #ccc;
+        border-radius: 4px;
       }
     </style>
     
@@ -28,13 +30,13 @@
 </head>
 <body>
   <%String name = (String) request.getSession().getAttribute("user");%>
-  <%List<Mention> userMentions = UserStore.getInstance().getUser(name).getMentions();%>
+  <%List<Mention> userMentions;%>
   <nav>
     <a id="navTitle" href="/">Team Vogue Chats</a>
     <% if(name != null){%>
       <a>Hello <%=name%>!</a>
       <a href="/profile/<%=name %>">My Profile</a>
-      <a href="/mentions">Mentions</a>
+      <a class="active" href="/mentions">Mentions</a>
       <a href="/activity">Activity</a>
     <% } else{ %>
       <a href="/login">Login</a>
@@ -50,29 +52,37 @@
 
       <h1>Your Mentions</h1>
 
+      <% if(name != null){%>
+        <%userMentions = UserStore.getInstance().getUser(name).getMentions();%>
+
+        <p>This is everywhere you have been mentioned! 
+        You have <%=userMentions.size()%> mention(s)!</p>
+
+      <% } else{ %>
+        <%userMentions = null;%>
+        <p>You have no mentions. Please login.</p>
+      <% } %>
+
       <hr/>
 
       <div id="mentions">
-
-          <% if(name != null){%>
-            <%
-            if (userMentions == null || userMentions.isEmpty()) {
-            %>
-              <p>You have not been mentioned yet.</p>
-            <%} else{ %>
-              <ul class="mdl-list">
-                <% for(Mention mention : userMentions){ %>
-                  <li> <a href="/chat/<%= mention.getConversation()%>"> 
-                        <%= mention.getConversation() %></a> : 
-                        <%= mention.getMessage() %>
-                  </li>
-                  <%}%>
-              </ul>
+        <% if(name != null){ %>
+          <% if(userMentions != null && userMentions.size() > 0) { %>
+             <ul class="mdl-list">
+              <% for(Mention mention : userMentions){ %>
+                <li> Conversation <a href="/chat/<%= mention.getConversation()%>"> 
+                  <%= mention.getConversation() %></a> 
+                  in message "<%= mention.getMessage() %>"
+                </li>
               <%}%>
+            </ul>
+          <% } else{ %>
+            <p>  You have not been mentioned yet.</p>
+          <% } %>          
               
-          <%} else{%>
-            <p>Please log in.</p>
-         <%}%>
+        <%} else{%>
+          <p>You can login <a href="/login">here</a>.</p>
+        <%}%>
       
     </div>
   </div>

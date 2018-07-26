@@ -18,7 +18,9 @@
     #activity {
       background-color: white;
       height: 500px;
-      overflow-y: scroll
+      overflow-y: scroll;
+      border: 3px solid #ccc;
+      border-radius: 4px;
     }
   </style>
 
@@ -44,7 +46,7 @@
       <a>Hello <%= name %>!</a>
       <a href="/profile/<%=name %>">My Profile</a>
       <a href="/mentions">Mentions</a>
-      <a href="/activity">Activity</a>
+      <a class="active" href="/activity">Activity</a>
     <% } else{ %>
       <a href="/login">Login</a>
     <% } %>
@@ -58,6 +60,8 @@
 
     <h1>Activity Feed</h1>
 
+    <p>All the events across the Team Vogue Chat App will be shown here!</p>
+    
     <hr/>
 
     <div id="activity">
@@ -72,7 +76,7 @@
             <% for(Event event : events){ %>
               <% Instant timeStamp = event.getCreationTime(); %>
 
-              <li> <b><%=formatter.format(timeStamp)%></b>:
+              <li> <b><%=formatter.format(timeStamp)%> PST</b>:
                 <%= event.getDescription() %>
 
               <% if (event.hasConversation()) {%>
